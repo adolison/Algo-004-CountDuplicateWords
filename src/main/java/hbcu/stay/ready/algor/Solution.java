@@ -1,24 +1,46 @@
 package hbcu.stay.ready.algor;
 
-import java.util.Iterator;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Solution {
 
-    public String countUniqueWords(String input){
+    public String countUniqueWords(String input) {
+        String view = "";
 
-        //String response = "";
-        TreeSet<String> tree=new TreeSet<String>();
-        String[] parts = input.split("\\.| |s|!");
 
-        for(int i =0;i<parts.length;i++){
-            tree.add(parts[i]);
-            System.out.println(parts[i]);
-            //response += tree;
+        HashMap<String, Integer> hMap = new HashMap<String, Integer>();
+        String[] parts = input.split("\\.\\s|\\s|!");
 
+
+        for(String words : parts) {
+            if(!hMap.containsKey(words)) {
+                hMap.put(words, 1);
+            }
+            else {
+                int currentValue = hMap.get(words);
+                currentValue++;
+                hMap.put(words, currentValue);
+            }
         }
-        String response = ("The "+ tree.size()+" unique words are: ");
 
-        return response + tree;
+        view += String.format("The %d unique words are:\n", hMap.size());
+        int size = 0;
+        for (String w : hMap.keySet()) {
+            size++;
+            int value = hMap.get(w);
+            if (size < hMap.size()) {
+                view += String.format("%s (Seen %d)\n", w, value);
+            }
+            else {
+                view += String.format("%s (Seen %d)", w, value);
+            }
+        }
+        /*Integer tmp = hMap.;
+        map.put(a, map.get(b));
+        map.put(b, tmp);*/
+
+        hMap.remove("it");
+
+        return view;
     }
 }
